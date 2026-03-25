@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.image.Image?>
+
+<VBox alignment="CENTER" spacing="20.0" xmlns="http://javafx.com/javafx/8.0.171" 
+      xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.abms.ui.LoginController"
+      styleClass="root" stylesheets="@css/style.css">
+    
+    <padding>
+        <Insets bottom="40.0" left="40.0" right="40.0" top="40.0" />
+    </padding>
+
+    <!-- Application Logo -->
+    <VBox alignment="CENTER" spacing="10">
+        <ImageView fitHeight="120.0" fitWidth="120.0" pickOnBounds="true" preserveRatio="true">
+            <image>
+                <Image url="@images/logo.png" />
+            </image>
+        </ImageView>
+        <Label text="Animal Bite Surveillance" styleClass="label-header" />
+        <Label text="&amp; Public Health Monitoring System" style="-fx-font-size: 14px; -fx-text-fill: gray;" />
+    </VBox>
+
+    <VBox spacing="15" maxWidth="300" styleClass="card">
+        <VBox spacing="5">
+            <Label text="Username" />
+            <TextField fx:id="usernameField" promptText="Enter username" />
+        </VBox>
+        
+        <VBox spacing="5">
+            <Label text="Password" />
+            <PasswordField fx:id="passwordField" promptText="Enter password" />
+        </VBox>
+        
+        <Button fx:id="loginButton" text="Login" onAction="#handleLogin" maxWidth="Infinity" />
+        
+        <Label fx:id="errorLabel" style="-fx-text-fill: -fx-medical-red;" />
+    </VBox>
+
+    <Label text="© 2026 Public Health Department" style="-fx-font-size: 10px; -fx-text-fill: gray;" />
+</VBox>
