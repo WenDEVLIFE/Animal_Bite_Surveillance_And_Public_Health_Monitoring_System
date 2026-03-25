@@ -26,7 +26,12 @@ public class DashboardController {
 
     @FXML
     private void showVaccinationMonitoring() throws IOException {
-        System.out.println("Vaccination Monitoring not implemented yet");
+        App.setRoot("/com/abms/ui/vaccination_monitoring.fxml");
+    }
+
+    @FXML
+    private void showReportsAnalytics() throws IOException {
+        App.setRoot("/com/abms/ui/reports_analytics.fxml");
     }
 
     @FXML

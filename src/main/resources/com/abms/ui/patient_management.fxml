@@ -15,7 +15,7 @@
         <Button text="← Back" onAction="#goBack" style="-fx-background-color: transparent; -fx-text-fill: -fx-primary-blue;" />
         <ImageView fitHeight="40.0" fitWidth="40.0" pickOnBounds="true" preserveRatio="true">
             <image>
-                <Image url="@images/logo.png" />
+                <Image url="@../../../images/animal.png" />
             </image>
         </ImageView>
         <Label text="Patient Registration &amp; Incident Recording" styleClass="label-header" />

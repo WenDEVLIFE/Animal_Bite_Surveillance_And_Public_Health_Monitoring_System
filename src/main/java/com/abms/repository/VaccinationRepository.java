@@ -2,7 +2,10 @@ package com.abms.repository;
 
 import com.abms.utils.DatabaseConnection;
 
+import com.abms.service.VaccinationRecord;
 import java.sql.*;
+import java.util.ArrayList;
+import java.util.List;
 
 public class VaccinationRepository {
 
@@ -31,5 +34,32 @@ public class VaccinationRepository {
             
             pstmt.executeUpdate();
         }
+    }
+
+    public List<VaccinationRecord> getPendingVaccinations() throws SQLException {
+        List<VaccinationRecord> list = new ArrayList<>();
+        String sql = "SELECT v.id as vid, p.first_name, p.last_name, v.dose_number, v.scheduled_date, v.status " +
+                     "FROM vaccinations v " +
+                     "JOIN bite_incidents b ON v.incident_id = b.id " +
+                     "JOIN patients p ON b.patient_id = p.id " +
+                     "WHERE v.status = 'Pending' " +
+                     "ORDER BY v.scheduled_date ASC";
+                     
+        try (Connection conn = DatabaseConnection.getConnection();
+             Statement stmt = conn.createStatement();
+             ResultSet rs = stmt.executeQuery(sql)) {
+            
+            while (rs.next()) {
+                String fullName = rs.getString("first_name") + " " + rs.getString("last_name");
+                list.add(new VaccinationRecord(
+                    rs.getInt("vid"),
+                    fullName,
+                    rs.getInt("dose_number"),
+                    rs.getDate("scheduled_date").toString(),
+                    rs.getString("status")
+                ));
+            }
+        }
+        return list;
     }
 }
