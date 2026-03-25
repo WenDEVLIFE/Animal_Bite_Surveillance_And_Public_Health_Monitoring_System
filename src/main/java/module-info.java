@@ -1,0 +1,7 @@
+module com.animal_bite_surveillance_and_public_health_monitoring_system.animal_bite_surveillance_and_public_health_monitoring_system {
+    requires javafx.controls;
+    requires javafx.fxml;
+
+    opens com.animal_bite_surveillance_and_public_health_monitoring_system.animal_bite_surveillance_and_public_health_monitoring_system to javafx.fxml;
+    exports com.animal_bite_surveillance_and_public_health_monitoring_system.animal_bite_surveillance_and_public_health_monitoring_system;
+}
