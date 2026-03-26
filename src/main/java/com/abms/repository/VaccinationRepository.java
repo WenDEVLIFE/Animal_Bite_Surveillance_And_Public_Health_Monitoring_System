@@ -99,4 +99,27 @@ public class VaccinationRepository {
         }
         return list;
     }
+    public int getPendingVaccinationCount() throws SQLException {
+        String sql = "SELECT COUNT(*) FROM vaccinations WHERE status = 'Pending'";
+        try (Connection conn = DatabaseConnection.getConnection();
+             PreparedStatement pstmt = conn.prepareStatement(sql);
+             ResultSet rs = pstmt.executeQuery()) {
+            if (rs.next()) {
+                return rs.getInt(1);
+            }
+        }
+        return 0;
+    }
+
+    public int getCompletedDoseCount() throws SQLException {
+        String sql = "SELECT COUNT(*) FROM vaccinations WHERE status = 'Completed'";
+        try (Connection conn = DatabaseConnection.getConnection();
+             PreparedStatement pstmt = conn.prepareStatement(sql);
+             ResultSet rs = pstmt.executeQuery()) {
+            if (rs.next()) {
+                return rs.getInt(1);
+            }
+        }
+        return 0;
+    }
 }

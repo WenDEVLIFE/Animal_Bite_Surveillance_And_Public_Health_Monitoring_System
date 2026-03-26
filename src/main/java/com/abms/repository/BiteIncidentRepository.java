@@ -104,4 +104,16 @@ public class BiteIncidentRepository {
             pstmt.executeUpdate();
         }
     }
+
+    public int getTodayIncidentCount() throws SQLException {
+        String sql = "SELECT COUNT(*) FROM bite_incidents WHERE bite_date = CURRENT_DATE";
+        try (Connection conn = DatabaseConnection.getConnection();
+             PreparedStatement pstmt = conn.prepareStatement(sql);
+             ResultSet rs = pstmt.executeQuery()) {
+            if (rs.next()) {
+                return rs.getInt(1);
+            }
+        }
+        return 0;
+    }
 }

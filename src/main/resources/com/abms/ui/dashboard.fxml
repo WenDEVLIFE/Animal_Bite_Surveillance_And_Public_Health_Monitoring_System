@@ -44,15 +44,15 @@
             <HBox spacing="20">
                 <VBox styleClass="card" prefWidth="200">
                     <Label text="Today's Cases" style="-fx-font-weight: bold;" />
-                    <Label text="12" style="-fx-font-size: 36px; -fx-text-fill: -fx-primary-blue;" />
+                    <Label fx:id="todayCasesLabel" text="0" style="-fx-font-size: 36px; -fx-text-fill: -fx-primary-blue;" />
                 </VBox>
                 <VBox styleClass="card" prefWidth="200">
                     <Label text="Pending Vaccinations" style="-fx-font-weight: bold;" />
-                    <Label text="5" style="-fx-font-size: 36px; -fx-text-fill: -fx-highlight-orange;" />
+                    <Label fx:id="pendingVaccLabel" text="0" style="-fx-font-size: 36px; -fx-text-fill: -fx-highlight-orange;" />
                 </VBox>
                 <VBox styleClass="card" prefWidth="200">
                     <Label text="Completed Doses" style="-fx-font-weight: bold;" />
-                    <Label text="48" style="-fx-font-size: 36px; -fx-text-fill: -fx-success-green;" />
+                    <Label fx:id="completedDosesLabel" text="0" style="-fx-font-size: 36px; -fx-text-fill: -fx-success-green;" />
                 </VBox>
             </HBox>
             
