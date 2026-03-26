@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.geometry.Insets?>
+
+<VBox spacing="15" stylesheets="@css/style.css" xmlns:fx="http://javafx.com/fxml" fx:controller="com.abms.ui.EditIncidentDialogController">
+    <padding><Insets top="20" right="20" bottom="20" left="20"/></padding>
+    
+    <Label text="Edit Incident Details" styleClass="label-header" />
+    
+    <GridPane hgap="15" vgap="15">
+        <columnConstraints>
+            <ColumnConstraints prefWidth="120" />
+            <ColumnConstraints hgrow="ALWAYS" prefWidth="300" />
+        </columnConstraints>
+        
+        <Label text="Patient Name:" GridPane.columnIndex="0" GridPane.rowIndex="0"/>
+        <Label fx:id="patientNameLabel" style="-fx-font-weight: bold;" GridPane.columnIndex="1" GridPane.rowIndex="0"/>
+        
+        <Label text="Bite Date:" GridPane.columnIndex="0" GridPane.rowIndex="1"/>
+        <DatePicker fx:id="biteDatePicker" maxWidth="Infinity" GridPane.columnIndex="1" GridPane.rowIndex="1"/>
+        
+        <Label text="Animal Type:" GridPane.columnIndex="0" GridPane.rowIndex="2"/>
+        <ComboBox fx:id="animalTypeCombo" maxWidth="Infinity" GridPane.columnIndex="1" GridPane.rowIndex="2"/>
+        
+        <Label text="Bite Site:" GridPane.columnIndex="0" GridPane.rowIndex="3"/>
+        <TextField fx:id="biteSiteField" GridPane.columnIndex="1" GridPane.rowIndex="3"/>
+        
+        <Label text="Animal Status:" GridPane.columnIndex="0" GridPane.rowIndex="4"/>
+        <ComboBox fx:id="animalStatusCombo" maxWidth="Infinity" GridPane.columnIndex="1" GridPane.rowIndex="4"/>
+        
+        <Label text="Exposure Type:" GridPane.columnIndex="0" GridPane.rowIndex="5"/>
+        <ComboBox fx:id="exposureTypeCombo" maxWidth="Infinity" GridPane.columnIndex="1" GridPane.rowIndex="5"/>
+        
+        <Label text="Remarks:" GridPane.columnIndex="0" GridPane.rowIndex="6"/>
+        <TextArea fx:id="remarksArea" prefHeight="80" GridPane.columnIndex="1" GridPane.rowIndex="6"/>
+    </GridPane>
+    
+    <HBox alignment="CENTER_RIGHT" spacing="10">
+        <Button text="Cancel" onAction="#handleCancel" style="-fx-background-color: transparent; -fx-text-fill: gray;" />
+        <Button text="Update Incident" onAction="#handleUpdate" style="-fx-background-color: -fx-highlight-orange;" />
+    </HBox>
+</VBox>
