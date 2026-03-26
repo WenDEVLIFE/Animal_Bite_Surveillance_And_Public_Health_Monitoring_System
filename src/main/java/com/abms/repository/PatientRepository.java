@@ -44,4 +44,26 @@ public class PatientRepository {
         }
         return names;
     }
+
+    public List<com.abms.model.Patient> getAllPatients() throws SQLException {
+        List<com.abms.model.Patient> patients = new ArrayList<>();
+        String sql = "SELECT id, first_name, last_name, age, gender, address, contact_number FROM patients";
+        try (Connection conn = DatabaseConnection.getConnection();
+             Statement stmt = conn.createStatement();
+             ResultSet rs = stmt.executeQuery(sql)) {
+            
+            while (rs.next()) {
+                patients.add(new com.abms.model.Patient(
+                    rs.getInt("id"),
+                    rs.getString("first_name"),
+                    rs.getString("last_name"),
+                    rs.getInt("age"),
+                    rs.getString("gender"),
+                    rs.getString("address"),
+                    rs.getString("contact_number")
+                ));
+            }
+        }
+        return patients;
+    }
 }

@@ -24,9 +24,20 @@ public class PatientController {
     @FXML private TextArea remarksArea;
 
     private final PatientService patientService;
+    private final com.abms.repository.PatientRepository patientRepository;
+
+    @FXML private TableView<com.abms.model.Patient> patientTable;
+    @FXML private TableColumn<com.abms.model.Patient, Integer> idCol;
+    @FXML private TableColumn<com.abms.model.Patient, String> firstNameCol;
+    @FXML private TableColumn<com.abms.model.Patient, String> lastNameCol;
+    @FXML private TableColumn<com.abms.model.Patient, Integer> ageCol;
+    @FXML private TableColumn<com.abms.model.Patient, String> genderCol;
+    @FXML private TableColumn<com.abms.model.Patient, String> contactCol;
+    @FXML private TableColumn<com.abms.model.Patient, String> addressCol;
 
     public PatientController() {
         this.patientService = new PatientService();
+        this.patientRepository = new com.abms.repository.PatientRepository();
     }
 
     @FXML
@@ -37,6 +48,26 @@ public class PatientController {
         exposureTypeCombo.getItems().addAll("Category I", "Category II", "Category III");
         
         biteDatePicker.setValue(LocalDate.now());
+
+        // Initialize table columns
+        idCol.setCellValueFactory(new javafx.scene.control.cell.PropertyValueFactory<>("id"));
+        firstNameCol.setCellValueFactory(new javafx.scene.control.cell.PropertyValueFactory<>("firstName"));
+        lastNameCol.setCellValueFactory(new javafx.scene.control.cell.PropertyValueFactory<>("lastName"));
+        ageCol.setCellValueFactory(new javafx.scene.control.cell.PropertyValueFactory<>("age"));
+        genderCol.setCellValueFactory(new javafx.scene.control.cell.PropertyValueFactory<>("gender"));
+        contactCol.setCellValueFactory(new javafx.scene.control.cell.PropertyValueFactory<>("contactNumber"));
+        addressCol.setCellValueFactory(new javafx.scene.control.cell.PropertyValueFactory<>("address"));
+
+        loadPatients();
+    }
+
+    private void loadPatients() {
+        try {
+            javafx.collections.ObservableList<com.abms.model.Patient> patients = javafx.collections.FXCollections.observableArrayList(patientRepository.getAllPatients());
+            patientTable.setItems(patients);
+        } catch (java.sql.SQLException e) {
+            e.printStackTrace();
+        }
     }
 
     @FXML
@@ -52,6 +83,7 @@ public class PatientController {
             
             showAlert(Alert.AlertType.INFORMATION, "Success", "Patient and Incident recorded successfully. Vaccination schedule generated.");
             clearFields();
+            loadPatients(); // Refresh the list after saving new patient
         } catch (Exception e) {
             showAlert(Alert.AlertType.ERROR, "Error", "Failed to save record: " + e.getMessage());
             e.printStackTrace();
