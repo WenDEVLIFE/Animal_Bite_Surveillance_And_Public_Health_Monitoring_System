@@ -22,7 +22,11 @@
     </HBox>
 
     <VBox VBox.vgrow="ALWAYS" styleClass="card" spacing="10">
-        <Label text="Pending Vaccinations" style="-fx-font-weight: bold; -fx-font-size: 16px; -fx-text-fill: -fx-highlight-orange;" />
+        <HBox alignment="CENTER_LEFT" spacing="20">
+            <Label text="Vaccination Records" style="-fx-font-weight: bold; -fx-font-size: 16px; -fx-text-fill: -fx-primary-blue;" />
+            <Region HBox.hgrow="ALWAYS" />
+            <ComboBox fx:id="statusFilter" onAction="#handleFilterChange" prefWidth="150" promptText="Filter Status" />
+        </HBox>
         
         <TableView fx:id="vaccinationTable" VBox.vgrow="ALWAYS">
             <columns>

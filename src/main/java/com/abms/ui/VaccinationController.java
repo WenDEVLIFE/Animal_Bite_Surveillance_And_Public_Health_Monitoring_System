@@ -21,6 +21,7 @@ public class VaccinationController {
     @FXML private TableColumn<VaccinationRecord, Integer> doseCol;
     @FXML private TableColumn<VaccinationRecord, String> dateCol;
     @FXML private TableColumn<VaccinationRecord, String> statusCol;
+    @FXML private ComboBox<String> statusFilter;
 
     private final VaccinationRepository repo;
 
@@ -36,12 +37,26 @@ public class VaccinationController {
         dateCol.setCellValueFactory(new PropertyValueFactory<>("scheduledDate"));
         statusCol.setCellValueFactory(new PropertyValueFactory<>("status"));
         
+        statusFilter.getItems().addAll("All", "Pending", "Completed");
+        statusFilter.setValue("Pending"); // Default to pending as before
+        
+        loadData();
+    }
+
+    @FXML
+    private void handleFilterChange() {
         loadData();
     }
 
     private void loadData() {
         try {
-            ObservableList<VaccinationRecord> data = FXCollections.observableArrayList(repo.getPendingVaccinations());
+            String filter = statusFilter.getValue();
+            ObservableList<VaccinationRecord> data;
+            if ("All".equals(filter)) {
+                data = FXCollections.observableArrayList(repo.getAllVaccinations());
+            } else {
+                data = FXCollections.observableArrayList(repo.getVaccinationsByStatus(filter));
+            }
             vaccinationTable.setItems(data);
         } catch (SQLException e) {
             e.printStackTrace();
