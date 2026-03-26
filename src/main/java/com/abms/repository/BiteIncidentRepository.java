@@ -116,4 +116,31 @@ public class BiteIncidentRepository {
         }
         return 0;
     }
+
+    public java.util.Map<String, Integer> getIncidentCountsByAnimalType() throws SQLException {
+        java.util.Map<String, Integer> counts = new java.util.HashMap<>();
+        String sql = "SELECT animal_type, COUNT(*) as count FROM bite_incidents GROUP BY animal_type";
+        try (Connection conn = DatabaseConnection.getConnection();
+             PreparedStatement pstmt = conn.prepareStatement(sql);
+             ResultSet rs = pstmt.executeQuery()) {
+            while (rs.next()) {
+                counts.put(rs.getString("animal_type"), rs.getInt("count"));
+            }
+        }
+        return counts;
+    }
+
+    public java.util.Map<String, Integer> getMonthlyIncidentCounts() throws SQLException {
+        java.util.Map<String, Integer> counts = new java.util.LinkedHashMap<>();
+        String sql = "SELECT DATE_FORMAT(bite_date, '%b %Y') as month, COUNT(*) as count " +
+                     "FROM bite_incidents GROUP BY month ORDER BY MIN(bite_date)";
+        try (Connection conn = DatabaseConnection.getConnection();
+             PreparedStatement pstmt = conn.prepareStatement(sql);
+             ResultSet rs = pstmt.executeQuery()) {
+            while (rs.next()) {
+                counts.put(rs.getString("month"), rs.getInt("count"));
+            }
+        }
+        return counts;
+    }
 }

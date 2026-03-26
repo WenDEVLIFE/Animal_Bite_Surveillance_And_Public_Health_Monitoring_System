@@ -22,11 +22,24 @@
         <Label text="Reports &amp; Analytics" styleClass="label-header" />
     </HBox>
 
-    <VBox VBox.vgrow="ALWAYS" styleClass="card" spacing="10">
-        <Label text="Overview of Animal Bite Cases" style="-fx-font-weight: bold; -fx-font-size: 16px; -fx-text-fill: -fx-medical-red;" />
-        
-        <HBox VBox.vgrow="ALWAYS" spacing="20" alignment="CENTER">
-            <PieChart fx:id="animalTypeChart" />
-        </HBox>
-    </VBox>
+    <ScrollPane fitToWidth="true" VBox.vgrow="ALWAYS" style="-fx-background-color: transparent;">
+        <VBox spacing="20">
+            <VBox styleClass="card" spacing="10">
+                <Label text="Bite Incidents by Animal Type" style="-fx-font-weight: bold; -fx-font-size: 16px; -fx-text-fill: -fx-medical-red;" />
+                <PieChart fx:id="animalTypeChart" prefHeight="300" />
+            </VBox>
+            
+            <VBox styleClass="card" spacing="10">
+                <Label text="Monthly Incident Trends" style="-fx-font-weight: bold; -fx-font-size: 16px; -fx-text-fill: -fx-medical-red;" />
+                <javafx.scene.chart.BarChart fx:id="monthlyChart" prefHeight="300">
+                    <xAxis>
+                        <javafx.scene.chart.CategoryAxis label="Month" />
+                    </xAxis>
+                    <yAxis>
+                        <javafx.scene.chart.NumberAxis label="Number of Cases" />
+                    </yAxis>
+                </javafx.scene.chart.BarChart>
+            </VBox>
+        </VBox>
+    </ScrollPane>
 </VBox>

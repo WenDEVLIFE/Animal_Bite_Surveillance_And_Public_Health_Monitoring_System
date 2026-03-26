@@ -9,18 +9,51 @@ import java.io.IOException;
 
 public class ReportController {
 
-    @FXML private PieChart animalTypeChart;
+    @FXML private javafx.scene.chart.PieChart animalTypeChart;
+    @FXML private javafx.scene.chart.BarChart<String, Number> monthlyChart;
+
+    private final com.abms.repository.BiteIncidentRepository incidentRepo;
+
+    public ReportController() {
+        this.incidentRepo = new com.abms.repository.BiteIncidentRepository();
+    }
 
     @FXML
     public void initialize() {
-        // Mock data for analytics visually
-        ObservableList<PieChart.Data> pieChartData =
-                FXCollections.observableArrayList(
-                new PieChart.Data("Dogs", 65),
-                new PieChart.Data("Cats", 25),
-                new PieChart.Data("Others", 10));
-        animalTypeChart.setData(pieChartData);
-        animalTypeChart.setTitle("Bite Incidents by Animal Type");
+        loadAnimalTypeData();
+        loadMonthlyTrendsData();
+    }
+
+    private void loadAnimalTypeData() {
+        try {
+            java.util.Map<String, Integer> counts = incidentRepo.getIncidentCountsByAnimalType();
+            ObservableList<PieChart.Data> pieChartData = FXCollections.observableArrayList();
+            
+            counts.forEach((type, count) -> {
+                pieChartData.add(new PieChart.Data(type + " (" + count + ")", count));
+            });
+            
+            animalTypeChart.setData(pieChartData);
+        } catch (java.sql.SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
+    private void loadMonthlyTrendsData() {
+        try {
+            java.util.Map<String, Integer> counts = incidentRepo.getMonthlyIncidentCounts();
+            javafx.scene.chart.XYChart.Series<String, Number> series = new javafx.scene.chart.XYChart.Series<>();
+            series.setName("Incidents");
+            
+            counts.forEach((month, count) -> {
+                series.getData().add(new javafx.scene.chart.XYChart.Data<>(month, count));
+            });
+            
+            monthlyChart.getData().clear();
+            monthlyChart.getData().add(series);
+        } catch (java.sql.SQLException e) {
+            e.printStackTrace();
+        }
     }
 
     @FXML
