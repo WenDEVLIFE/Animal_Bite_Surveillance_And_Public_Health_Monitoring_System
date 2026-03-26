@@ -5,10 +5,13 @@ import javafx.fxml.FXML;
 import java.io.IOException;
 import javafx.scene.control.ListView;
 import javafx.scene.control.Label;
+import com.abms.utils.UserSession;
 
 public class DashboardController {
 
     @FXML private ListView<String> activityList;
+    @FXML private javafx.scene.layout.VBox adminBox;
+    @FXML private Label welcomeLabel;
     @FXML private Label todayCasesLabel;
     @FXML private Label pendingVaccLabel;
     @FXML private Label completedDosesLabel;
@@ -26,6 +29,18 @@ public class DashboardController {
     public void initialize() {
         if (activityList != null) {
             activityList.setPlaceholder(new Label("No recent activity"));
+        }
+        
+        com.abms.utils.UserSession session = com.abms.utils.UserSession.getInstance();
+        if (session != null) {
+            welcomeLabel.setText("Welcome, " + session.getUsername() + " (" + session.getRole() + ")");
+            if (session.isAdmin()) {
+                adminBox.setVisible(true);
+                adminBox.setManaged(true);
+            } else {
+                adminBox.setVisible(false);
+                adminBox.setManaged(false);
+            }
         }
         
         refreshStatistics();
@@ -87,8 +102,21 @@ public class DashboardController {
     }
 
     @FXML
+    private void showUserManagement() throws IOException {
+        stopTimeline();
+        App.setRoot("/com/abms/ui/user_management.fxml");
+    }
+
+    @FXML
+    private void showSystemLogs() throws IOException {
+        stopTimeline();
+        App.setRoot("/com/abms/ui/system_logs.fxml");
+    }
+
+    @FXML
     private void handleLogout() throws IOException {
         stopTimeline();
+        UserSession.logout();
         App.setRoot("/com/abms/ui/login.fxml");
     }
 

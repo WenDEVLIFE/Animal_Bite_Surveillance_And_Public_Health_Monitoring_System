@@ -2,6 +2,8 @@ package com.abms.ui;
 
 import com.animal_bite_surveillance_and_public_health_monitoring_system.animal_bite_surveillance_and_public_health_monitoring_system.App;
 import com.abms.service.PatientService;
+import com.abms.utils.UserSession;
+import com.abms.repository.ActivityLogRepository;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import java.io.IOException;
@@ -49,11 +51,13 @@ public class PatientController {
     private final PatientService patientService;
     private final com.abms.repository.PatientRepository patientRepository;
     private final com.abms.repository.BiteIncidentRepository incidentRepository;
+    private final com.abms.repository.ActivityLogRepository logRepository;
 
     public PatientController() {
         this.patientService = new PatientService();
         this.patientRepository = new com.abms.repository.PatientRepository();
         this.incidentRepository = new com.abms.repository.BiteIncidentRepository();
+        this.logRepository = new com.abms.repository.ActivityLogRepository();
     }
 
     @FXML
@@ -218,6 +222,8 @@ public class PatientController {
             if (response == ButtonType.YES) {
                 try {
                     patientRepository.deletePatient(p.getId());
+                    String currentUser = (UserSession.getInstance() != null) ? UserSession.getInstance().getUsername() : "Unknown";
+                    logRepository.log(currentUser, "Delete Patient", "Deleted patient: " + p.getFirstName() + " " + p.getLastName() + " (ID: " + p.getId() + ")");
                     loadPatients();
                     loadIncidents();
                 } catch (SQLException e) {
@@ -233,6 +239,8 @@ public class PatientController {
             if (response == ButtonType.YES) {
                 try {
                     incidentRepository.deleteIncident(inc.getId());
+                    String currentUser = (UserSession.getInstance() != null) ? UserSession.getInstance().getUsername() : "Unknown";
+                    logRepository.log(currentUser, "Delete Incident", "Deleted incident #" + inc.getId() + " for " + inc.getPatientName());
                     loadIncidents();
                 } catch (SQLException e) {
                     showAlert(Alert.AlertType.ERROR, "Error", "Failed to delete: " + e.getMessage());
@@ -250,13 +258,19 @@ public class PatientController {
     private void handleSave() {
         try {
             int age = Integer.parseInt(ageField.getText());
+            String fName = firstNameField.getText();
+            String lName = lastNameField.getText();
+            
             patientService.registerPatientWithIncident(
-                firstNameField.getText(), lastNameField.getText(), age, genderCombo.getValue(),
+                fName, lName, age, genderCombo.getValue(),
                 addressArea.getText(), contactField.getText(),
                 biteDatePicker.getValue(), animalTypeCombo.getValue(), biteSiteField.getText(),
                 animalStatusCombo.getValue(), exposureTypeCombo.getValue(), remarksArea.getText()
             );
             
+            String currentUser = (UserSession.getInstance() != null) ? UserSession.getInstance().getUsername() : "Unknown";
+            logRepository.log(currentUser, "Register Patient", "Registered new patient: " + fName + " " + lName);
+
             showAlert(Alert.AlertType.INFORMATION, "Success", "Patient and Incident recorded successfully. Vaccination schedule generated.");
             clearFields();
             loadPatients(); // Refresh the list after saving new patient

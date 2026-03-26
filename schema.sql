@@ -54,6 +54,15 @@ CREATE TABLE vaccinations (
     FOREIGN KEY (administered_by) REFERENCES users(id) ON DELETE SET NULL
 );
 
+-- System Activity Logs for auditing
+CREATE TABLE IF NOT EXISTS system_activity_logs (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    username VARCHAR(255),
+    action VARCHAR(255),
+    details TEXT,
+    timestamp TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
+
 -- Insert default admin user (password: admin123 - in real app should be hashed)
 INSERT INTO users (username, password, role, full_name) 
 VALUES ('admin', 'admin123', 'ADMIN', 'System Administrator');

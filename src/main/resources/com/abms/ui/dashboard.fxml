@@ -28,6 +28,14 @@
             <Button text="Patient Registration" onAction="#showPatientManagement" styleClass="sidebar-button" maxWidth="Infinity" />
             <Button text="Vaccination Schedule" onAction="#showVaccinationMonitoring" styleClass="sidebar-button" maxWidth="Infinity" />
             <Button text="Reports &amp; Analytics" onAction="#showReportsAnalytics" styleClass="sidebar-button" maxWidth="Infinity" />
+            
+            <VBox fx:id="adminBox" spacing="10" managed="false" visible="false">
+                <Separator style="-fx-padding: 5 20;" />
+                <Label text="ADMIN PANEL" style="-fx-text-fill: -fx-highlight-orange; -fx-font-size: 11px; -fx-padding: 0 20;" />
+                <Button text="User Management" onAction="#showUserManagement" styleClass="sidebar-button" maxWidth="Infinity" />
+                <Button text="System Activity Logs" onAction="#showSystemLogs" styleClass="sidebar-button" maxWidth="Infinity" />
+            </VBox>
+
             <Region VBox.vgrow="ALWAYS" />
             <Button text="Logout" onAction="#handleLogout" styleClass="sidebar-button" maxWidth="Infinity" style="-fx-background-color: rgba(255,0,0,0.2);" />
         </VBox>
@@ -39,7 +47,7 @@
             <padding>
                 <Insets top="30" left="30" right="30" bottom="30" />
             </padding>
-            <Label text="Welcome, Health Worker" styleClass="label-header" />
+            <Label fx:id="welcomeLabel" text="Welcome, User" styleClass="label-header" />
             
             <HBox spacing="20">
                 <VBox styleClass="card" prefWidth="200">

@@ -55,5 +55,18 @@
     -fx-background-color: white;
     -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.1), 10, 0, 0, 5);
     -fx-background-radius: 8;
+    -fx-light-gray: #E0E0E0;
     -fx-padding: 20;
+}
+
+.button-primary {
+    -fx-background-color: -fx-primary-blue;
+}
+
+.button-edit {
+    -fx-background-color: -fx-highlight-orange;
+}
+
+.button-delete {
+    -fx-background-color: -fx-medical-red;
 }

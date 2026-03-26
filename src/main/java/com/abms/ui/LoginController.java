@@ -2,6 +2,8 @@ package com.abms.ui;
 
 import com.animal_bite_surveillance_and_public_health_monitoring_system.animal_bite_surveillance_and_public_health_monitoring_system.App;
 import com.abms.service.AuthenticationService;
+import com.abms.utils.UserSession;
+import com.abms.repository.ActivityLogRepository;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
@@ -19,9 +21,11 @@ public class LoginController {
     @FXML private ImageView logoImageView;
 
     private final AuthenticationService authService;
+    private final ActivityLogRepository logRepo;
 
     public LoginController() {
         this.authService = new AuthenticationService();
+        this.logRepo = new ActivityLogRepository();
     }
 
     public void initialize() {
@@ -63,14 +67,9 @@ public class LoginController {
                 System.out.println("Login successful! Role: " + role);
                 
                 if (role != null) {
-                    // Role-based routing
-                    if ("ADMIN".equals(role)) {
-                        App.setRoot("/com/abms/ui/dashboard.fxml"); 
-                    } else if ("HEALTH_WORKER".equals(role)) {
-                        App.setRoot("/com/abms/ui/dashboard.fxml"); 
-                    } else {
-                        App.setRoot("/com/abms/ui/dashboard.fxml"); 
-                    }
+                    logRepo.log(username, "Login Success", "User logged in with role: " + role);
+                    UserSession.login(username, role);
+                    App.setRoot("/com/abms/ui/dashboard.fxml");
                 } else {
                     errorLabel.setText("User role not recognized.");
                 }
@@ -79,6 +78,7 @@ public class LoginController {
                 e.printStackTrace();
             }
         } else {
+            logRepo.log(username, "Login Failure", "Invalid credentials provided for user: " + username);
             errorLabel.setText("Invalid username or password.");
         }
     }
