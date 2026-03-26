@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.image.Image?>
+
+<VBox spacing="20" styleClass="root" stylesheets="@css/style.css" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.abms.ui.SystemLogsController">
+    <padding>
+        <Insets top="20" left="20" right="20" bottom="20" />
+    </padding>
+
+    <HBox alignment="CENTER_LEFT" spacing="15">
+        <Button text="← Back" onAction="#goBack" style="-fx-background-color: transparent; -fx-text-fill: -fx-primary-blue;" />
+        <ImageView fitHeight="40.0" fitWidth="40.0" pickOnBounds="true" preserveRatio="true">
+            <image>
+                <Image url="@images/logo.png" />
+            </image>
+        </ImageView>
+        <Label text="System Activity Logs" styleClass="label-header" />
+    </HBox>
+
+    <VBox VBox.vgrow="ALWAYS" spacing="10" styleClass="card">
+        <HBox alignment="CENTER_LEFT" spacing="10">
+            <Label text="Recent System Activities" style="-fx-font-weight: bold; -fx-font-size: 16px; -fx-text-fill: -fx-primary-blue;" />
+            <Region HBox.hgrow="ALWAYS" />
+            <Button text="Refresh" onAction="#loadLogs" styleClass="sidebar-button" style="-fx-background-color: -fx-primary-blue; -fx-text-fill: white;" />
+        </HBox>
+        
+        <TableView fx:id="logsTable" VBox.vgrow="ALWAYS">
+            <columns>
+                <TableColumn fx:id="timestampCol" text="Timestamp" prefWidth="180" />
+                <TableColumn fx:id="userCol" text="User" prefWidth="120" />
+                <TableColumn fx:id="actionCol" text="Action" prefWidth="150" />
+                <TableColumn fx:id="detailsCol" text="Details" prefWidth="300" />
+            </columns>
+        </TableView>
+    </VBox>
+</VBox>
