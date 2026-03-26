@@ -21,7 +21,7 @@
         <Label text="Patient Registration &amp; Incident Recording" styleClass="label-header" />
     </HBox>
 
-    <TabPane VBox.vgrow="ALWAYS" tabClosingPolicy="UNAVAILABLE" styleClass="card">
+    <TabPane fx:id="patientManagementTabPane" VBox.vgrow="ALWAYS" tabClosingPolicy="UNAVAILABLE" styleClass="card">
         <Tab text="Registration">
             <ScrollPane fitToWidth="true" style="-fx-background-color: transparent;">
                 <VBox spacing="20">
@@ -104,8 +104,8 @@
                     </VBox>
 
                     <HBox alignment="CENTER_RIGHT" spacing="10">
-                        <Button text="Cancel" style="-fx-background-color: transparent; -fx-text-fill: gray;" />
-                        <Button text="Save Patient &amp; Incident" onAction="#handleSave" prefWidth="200" style="-fx-background-color: -fx-success-green;" />
+                        <Button text="Cancel" onAction="#handleCancelRegistration" style="-fx-background-color: transparent; -fx-text-fill: gray;" />
+                        <Button fx:id="saveButton" text="Save Patient &amp; Incident" onAction="#handleSave" prefWidth="200" style="-fx-background-color: -fx-success-green;" />
                     </HBox>
                 </VBox>
             </ScrollPane>
@@ -122,6 +122,25 @@
                         <TableColumn fx:id="genderCol" text="Gender" prefWidth="80" />
                         <TableColumn fx:id="contactCol" text="Contact Number" prefWidth="150" />
                         <TableColumn fx:id="addressCol" text="Address" prefWidth="250" />
+                        <TableColumn fx:id="actionCol" text="Actions" prefWidth="150" />
+                    </columns>
+                </TableView>
+            </VBox>
+        </Tab>
+        <Tab text="Incident List">
+            <VBox spacing="15" styleClass="card">
+                <padding><Insets top="15" right="15" bottom="15" left="15"/></padding>
+                <TableView fx:id="incidentTable" VBox.vgrow="ALWAYS">
+                    <columns>
+                        <TableColumn fx:id="incIdCol" text="ID" prefWidth="50" />
+                        <TableColumn fx:id="incPatientCol" text="Patient Name" prefWidth="150" />
+                        <TableColumn fx:id="incDateCol" text="Bite Date" prefWidth="100" />
+                        <TableColumn fx:id="incAnimalCol" text="Animal Type" prefWidth="100" />
+                        <TableColumn fx:id="incSiteCol" text="Bite Site" prefWidth="100" />
+                        <TableColumn fx:id="incStatusCol" text="Animal Status" prefWidth="100" />
+                        <TableColumn fx:id="incExposureCol" text="Exposure Type" prefWidth="120" />
+                        <TableColumn fx:id="incRemarksCol" text="Remarks" prefWidth="200" />
+                        <TableColumn fx:id="incActionCol" text="Actions" prefWidth="150" />
                     </columns>
                 </TableView>
             </VBox>

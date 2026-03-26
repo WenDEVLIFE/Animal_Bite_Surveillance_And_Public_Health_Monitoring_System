@@ -66,4 +66,50 @@ public class PatientRepository {
         }
         return patients;
     }
+
+    public com.abms.model.Patient getPatientById(int id) throws SQLException {
+        String sql = "SELECT * FROM patients WHERE id = ?";
+        try (Connection conn = DatabaseConnection.getConnection();
+             PreparedStatement pstmt = conn.prepareStatement(sql)) {
+            pstmt.setInt(1, id);
+            try (ResultSet rs = pstmt.executeQuery()) {
+                if (rs.next()) {
+                    return new com.abms.model.Patient(
+                        rs.getInt("id"),
+                        rs.getString("first_name"),
+                        rs.getString("last_name"),
+                        rs.getInt("age"),
+                        rs.getString("gender"),
+                        rs.getString("address"),
+                        rs.getString("contact_number")
+                    );
+                }
+            }
+        }
+        return null;
+    }
+
+    public void deletePatient(int id) throws SQLException {
+        String sql = "DELETE FROM patients WHERE id = ?";
+        try (Connection conn = DatabaseConnection.getConnection();
+             PreparedStatement pstmt = conn.prepareStatement(sql)) {
+            pstmt.setInt(1, id);
+            pstmt.executeUpdate();
+        }
+    }
+
+    public void updatePatient(com.abms.model.Patient patient) throws SQLException {
+        String sql = "UPDATE patients SET first_name = ?, last_name = ?, age = ?, gender = ?, address = ?, contact_number = ? WHERE id = ?";
+        try (Connection conn = DatabaseConnection.getConnection();
+             PreparedStatement pstmt = conn.prepareStatement(sql)) {
+            pstmt.setString(1, patient.getFirstName());
+            pstmt.setString(2, patient.getLastName());
+            pstmt.setInt(3, patient.getAge());
+            pstmt.setString(4, patient.getGender());
+            pstmt.setString(5, patient.getAddress());
+            pstmt.setString(6, patient.getContactNumber());
+            pstmt.setInt(7, patient.getId());
+            pstmt.executeUpdate();
+        }
+    }
 }

@@ -13,4 +13,6 @@ module com.animal_bite_surveillance_and_public_health_monitoring_system.animal_b
     exports com.abms.repository;
     exports com.abms.service;
     exports com.abms.utils;
+    exports com.abms.model;
+    opens com.abms.model to javafx.base;
 }
