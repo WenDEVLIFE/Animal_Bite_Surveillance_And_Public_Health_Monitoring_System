@@ -11,6 +11,16 @@
             </goals>
         </action>
         <action>
+            <actionName>run.single.main</actionName>
+            <packagings>
+                <packaging>jar</packaging>
+            </packagings>
+            <goals>
+                <goal>clean</goal>
+                <goal>javafx:run</goal>
+            </goals>
+        </action>
+        <action>
             <actionName>debug</actionName>
             <goals>
                 <goal>clean</goal>
@@ -21,7 +31,30 @@
             </properties>
         </action>
         <action>
+            <actionName>debug.single.main</actionName>
+            <packagings>
+                <packaging>jar</packaging>
+            </packagings>
+            <goals>
+                <goal>clean</goal>
+                <goal>javafx:run@ide-debug</goal>
+            </goals>
+            <properties>
+                <jpda.listen>true</jpda.listen>
+            </properties>
+        </action>
+        <action>
             <actionName>profile</actionName>
+            <goals>
+                <goal>clean</goal>
+                <goal>javafx:run@ide-profile</goal>
+            </goals>
+        </action>
+        <action>
+            <actionName>profile.single.main</actionName>
+            <packagings>
+                <packaging>jar</packaging>
+            </packagings>
             <goals>
                 <goal>clean</goal>
                 <goal>javafx:run@ide-profile</goal>
